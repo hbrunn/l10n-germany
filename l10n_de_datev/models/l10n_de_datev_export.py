@@ -65,7 +65,8 @@ class L10nDeDatevExport(models.Model):
                         ("date", ">=", date_range.date_start),
                         ("date", "<=", date_range.date_end),
                         ("company_id", "=", this.company_id.id),
-                    ]
+                    ],
+                    order="date desc",
                 )
                 writer = DatevTransactionWriter(
                     this.company_id.datev_consultant_id,
@@ -179,10 +180,12 @@ class L10nDeDatevExport(models.Model):
                 "Gegenkonto (ohne BU-Schlüssel)": move_line2.account_id.code[
                     -code_length:
                 ],
-                "Buchungstext": move_line.name or move.name,
+                "Buchungstext": move.name,
                 "Belegdatum": move.date.strftime("%d%m"),
-                "Belegfeld 1": move_line2.name,
-                "KOST1 - Kostenstelle": move_line.analytic_account_id.code,
+                "Belegfeld 1": move_line.name,
+                "Belegfeld 2": move_line2.name,
+                "KOST1 - Kostenstelle": move_line.analytic_account_id.code
+                or move_line2.analytic_account_id.code,
             }
             if move_line.amount_currency:
                 factor = abs(amount / (move_line.debit or move_line.credit))

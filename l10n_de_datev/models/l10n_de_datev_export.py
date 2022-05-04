@@ -180,12 +180,14 @@ class L10nDeDatevExport(models.Model):
                 "Gegenkonto (ohne BU-Schlüssel)": move_line2.account_id.code[
                     -code_length:
                 ],
-                "Buchungstext": move.name,
+                "Buchungstext": move_line.name,
                 "Belegdatum": move.date.strftime("%d%m"),
-                "Belegfeld 1": move_line.name,
+                "Belegfeld 1": move.name,
                 "Belegfeld 2": move_line2.name,
                 "KOST1 - Kostenstelle": move_line.analytic_account_id.code
-                or move_line2.analytic_account_id.code,
+                or move_line.analytic_account_id.name
+                or move_line2.analytic_account_id.code
+                or move_line2.analytic_account_id.name,
             }
             if move_line.amount_currency:
                 factor = abs(amount / (move_line.debit or move_line.credit))

@@ -200,12 +200,12 @@ class L10nDeDatevExport(models.Model):
                         "WKZ Umsatz": move_line.currency_id.name,
                         "Kurs": (
                             "%.2f"
-                            % 1/currency._get_conversion_rate(
+                            % (1/currency._get_conversion_rate(
                                 move_line.currency_id,
                                 currency,
                                 move.company_id,
                                 move.date,
-                            )
+                            ))
                         ).replace(".", ","),
                         "Basis-Umsatz": ("%.2f" % abs(amount)).replace(".", ","),
                         "WKZ Basis-Umsatz": currency.name,

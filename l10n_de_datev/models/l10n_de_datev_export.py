@@ -199,7 +199,7 @@ class L10nDeDatevExport(models.Model):
                         ).replace(".", ","),
                         "WKZ Umsatz": move_line.currency_id.name,
                         "Kurs": (
-                            "%.2f"
+                            "%.6f"
                             % (1/currency._get_conversion_rate(
                                 move_line.currency_id,
                                 currency,

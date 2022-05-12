@@ -11,7 +11,7 @@ class L10nDeDatevExport(models.Model):
     _name = "l10n_de_datev.export"
     _rec_name = "fiscalyear_id"
     _description = "DATEV export"
-    _order = "fiscalyear_id"
+    _order = "fiscalyear_id desc, create_date desc"
 
     state = fields.Selection(
         [("draft", "Draft"), ("done", "Done")], default="draft", copy=False
@@ -200,12 +200,15 @@ class L10nDeDatevExport(models.Model):
                         "WKZ Umsatz": move_line.currency_id.name,
                         "Kurs": (
                             "%.6f"
-                            % (1/currency._get_conversion_rate(
-                                move_line.currency_id,
-                                currency,
-                                move.company_id,
-                                move.date,
-                            ))
+                            % (
+                                1
+                                / currency._get_conversion_rate(
+                                    move_line.currency_id,
+                                    currency,
+                                    move.company_id,
+                                    move.date,
+                                )
+                            )
                         ).replace(".", ","),
                         "Basis-Umsatz": ("%.2f" % abs(amount)).replace(".", ","),
                         "WKZ Basis-Umsatz": currency.name,
@@ -253,4 +256,5 @@ class L10nDeDatevExport(models.Model):
             "Konto": account.code[-account.company_id.datev_account_code_length :],
             "Kontobeschriftung": account.name,
             "SprachId": self.env.user.lang.replace("_", "-"),
+            "Kontenbeschriftung lang": account.name,
         }

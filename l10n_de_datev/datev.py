@@ -6,11 +6,12 @@ from collections import namedtuple, OrderedDict
 from io import StringIO
 
 
-DatevField = namedtuple(
-    "DatevField",
-    ("name", "length", "quote", "regex"),
-    defaults=(None, False, ".*"),
-)
+class DatevField:
+    def __init__(self, name, length=None, quote=False, regex=".*"):
+        self.name = name
+        self.length = length
+        self.quote = quote
+        self.regex = regex
 
 
 class DatevWriter(object):

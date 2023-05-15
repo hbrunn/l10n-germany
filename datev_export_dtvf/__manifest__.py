@@ -20,4 +20,5 @@
         "views/datev_export_dtvf.xml",
         "views/res_partner.xml",
     ],
+    "post_init_hook": "post_init_hook",
 }

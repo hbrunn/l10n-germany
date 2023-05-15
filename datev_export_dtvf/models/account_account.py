@@ -8,6 +8,7 @@ class AccountAccount(models.Model):
 
     datev_export_nonautomatic = fields.Boolean(
         "Suppress automatic calculations in DATEV",
+        default=True,
         help="When this flag is set, journal items from this account will be exported "
         "with field 'BU-Schlussel' set to '40', which inhibits automatic calculations "
         "in DATEV.",

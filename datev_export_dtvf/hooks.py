@@ -8,6 +8,5 @@ def post_init_hook(cr, registry):
     Preset account.account#datev_export_nonautomatic for known COAs
     """
     env = api.Environment(cr, SUPERUSER_ID, {})
-    for chart in env["account.chart.template"].search([]):
-        for company in env["res.company"].search([]):
-            chart._datev_set_nonautomatic_flag(company)
+    for company in env["res.company"].search([("chart_template_id", "!=", False)]):
+        company.chart_template_id._datev_set_nonautomatic_flag(company)

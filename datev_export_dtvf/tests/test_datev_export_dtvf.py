@@ -1,11 +1,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import base64
-import datetime
 import io
 import unittest
 import zipfile
 
+from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.tests.common import Form, TransactionCase, can_import
 
@@ -23,8 +23,8 @@ class TestDatevExportDtvf(TransactionCase):
                     }
                 )
                 .id,
-                "date_start": datetime.date.today(),
-                "date_end": datetime.date.today(),
+                "date_start": fields.Date.context_today(self),
+                "date_end": fields.Date.context_today(self),
             }
         )
         with Form(self.env["datev_export_dtvf.export"]) as WizardForm:

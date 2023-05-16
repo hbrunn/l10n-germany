@@ -23,8 +23,8 @@ class TestDatevExportDtvf(TransactionCase):
                     }
                 )
                 .id,
-                "date_start": fields.Date.context_today(self),
-                "date_end": fields.Date.context_today(self),
+                "date_start": fields.Date.context_today(self.env.user),
+                "date_end": fields.Date.context_today(self.env.user),
             }
         )
         with Form(self.env["datev_export_dtvf.export"]) as WizardForm:
